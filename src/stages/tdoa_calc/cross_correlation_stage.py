@@ -5,10 +5,11 @@ import sim_utils.plt_utils as plt
 import logging
 from sim_utils.output_utils import initialize_logger
 import csv, numpy
+import os
 
 # create logger object for this module
 logger = initialize_logger(__name__)
-
+current_directory = os.path.dirname(__file__)
 
 class CrossCorrelationStage:
 
@@ -33,7 +34,10 @@ class CrossCorrelationStage:
 
         if 1:
             sim_signal_list = []
-            with open('C:\\Users\\kiera\\OneDrive\\Documents\\SubBots\\ProjectDolphin\\MinimalSimulatorSystem\\src\\sim_utils\\cross_correlated.csv') as csv_file:
+            file_path = os.path.abspath(os.path.join(current_directory, os.pardir, os.pardir))
+            file_path += "/sim_utils/cross_correlated.csv"
+
+            with open(file_path) as csv_file:
                 csv_reader = csv.reader(csv_file, delimiter=',', lineterminator="\r")
                 line_count = 0
                 for row in csv_reader:
