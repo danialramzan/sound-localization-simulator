@@ -4,6 +4,7 @@ import numpy as np
 import sim_utils.plt_utils as plt
 import logging
 from sim_utils.output_utils import initialize_logger
+from sim_utils.common_types import *
 import csv, numpy
 import os
 
@@ -32,35 +33,26 @@ class CrossCorrelationStage:
         if level <= logging.DEBUG:
             plt.plot_signals(*sim_signal, title="Sampled and Quantized Signals")
 
-        if 1:
-            sim_signal_list = []
-            file_path = os.path.abspath(os.path.join(current_directory, os.pardir, os.pardir))
-            file_path += "/sim_utils/cross_correlated.csv"
+        # Test to inject CSV data directly into cross-correlation stage: successful!
+        # Disabling for now -- can uncomment if we want to look into this further
+        # Actual Read takes place in simulator_main, right at start and then is 
+        # placed into sim_signal in input gen stage
 
-            with open(file_path) as csv_file:
-                csv_reader = csv.reader(csv_file, delimiter=',', lineterminator="\r")
-                line_count = 0
-                for row in csv_reader:
-                    sim_signal_list.append(numpy.asarray(list(map(numpy.int32, row))))
-                    line_count += 1
-                print(f'Processed {line_count} lines.')
-                sim_signal = tuple(sim_signal_list)
-        else:
-            print("no csv file provided: simulating data")
-        #global_vars.DataList.append(sim_signal)
-        print(sim_signal)
-        print(type(sim_signal))
-        print(type(sim_signal[0]))
-        print(type(sim_signal[0][0]))
-        # with open('sim_utils\\cross_correlated.csv', 'w') as csv_file:
-        #     csv_writer = csv.writer(csv_file, delimiter=',', lineterminator="\r")
-        #     csv_writer.writerows(sim_signal)
-        #     #csv_writer.writerows([[1,2,3,4],[5,6,8,3],[26,3,5,7]])
-        
-        #     print("Finished")
-        #     print( global_vars.DataList)
-        #     csv_file.close()
+        # if global_vars.input_type == InputType.csv:
+        #     sim_signal_list = []
+        #     file_path = os.path.abspath(os.path.join(current_directory, os.pardir, os.pardir))
+        #     file_path += "/sim_utils/cross_correlated.csv"
 
+        #     with open(file_path) as csv_file:        #         csv_reader = csv.reader(csv_file, delimiter=',', lineterminator="\r")
+        #         line_count = 0
+        #         for row in csv_reader:
+        #             sim_signal_list.append(numpy.asarray(list(map(numpy.int32, row))))
+        #             line_count += 1
+        #         print(f'Processed {line_count} lines.')
+        #         sim_signal = tuple(sim_signal_list)
+        #         csv_file.close()
+        # else:
+        #     print("no csv file provided: simulating data")
 
         phase_analysis_inputs = [
             (sim_signal[0], sim_signal[i+1])
@@ -71,6 +63,24 @@ class CrossCorrelationStage:
             component.apply(input_sig)
             for (component, input_sig) in zip(self.components, phase_analysis_inputs)
         )
+
+        if not global_vars.phase_shift_error == 0:
+            # Optional phase shift error insertion
+            # Used to simulate variation in each hydrophones filters phase response
+            # due to imperfect part tolerances
+
+            # TODO: (kross) parameterize optional phase shift error
+            group_delay_error = global_vars.phase_shift_error/360 * (1/global_vars.signal_frequency)
+
+            tdoa = list(tdoa)
+
+            # Add/Subtract worst-case group delay error at random
+            for group_delay_index in range(len(tdoa)):
+                direction = np.random.choice([1,-1])
+                tdoa[group_delay_index] = tdoa[group_delay_index] + direction*group_delay_error
+                print("Phase shift " + str(group_delay_index + 1) + " has error " + str(direction*global_vars.phase_shift_error))
+
+            tdoa = tuple(tdoa)
 
         return tdoa
 
