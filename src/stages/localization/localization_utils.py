@@ -149,18 +149,19 @@ def angle_nls(func, args=(), radius=10, resolution = 1000):
     https://github.com/ubc-subbots/sound-localization-simulator/blob/master/docs/Position_Calculation_Algorithms.pdf
 
     @param func                 Either the function to be optimized, or its analytically
-                                calculated gradient. Use the is_grad flag to specificy
-                                Whether func should be interpreted as the function or its
-                                gradient. If func is the function, the gradient will be
-                                calculated numerically
-    @param args                 A tuple containing any other arguments that should be inputted
-                                to the function (but don't require minimization)
-    @param radius               A float determining the constant radius at which we interate over differing phi values to find MinError
-    @param resolution           An integer determining the resolution at which we iterate over phi (from 0 - 2pi)
-    @return                     A numpy array containing the value of arguments that will
-                                minimize func
-    '''
 
+
+                              
+    @param args                 A tuple containing any other arguments that should be inputted
+
+
+                                
+    @param radius               
+    @param resolution           
+    @return                     
+                               
+    '''
+    print("Hi Chloe")
 
     #BIG NOTE TO SELF, A 3D GRAPH OF THE SQUARED ERROR WOULD GO HARD AND SO WOULD WATCHING THE ALGORITHIM'S PATH ON SAID GRAPH
     #NOW THAT YOU GOT A GRADIENT SAMPLING SCRIPT, THIS IS THE NEXT BIG VISUALIZATION TOOL
