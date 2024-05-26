@@ -161,8 +161,7 @@ def angle_nls(func, args=(), radius=10, resolution = 1000):
     @return                     
                                
     '''
-    print("Hi Chloe")
-
+ 
     #BIG NOTE TO SELF, A 3D GRAPH OF THE SQUARED ERROR WOULD GO HARD AND SO WOULD WATCHING THE ALGORITHIM'S PATH ON SAID GRAPH
     #NOW THAT YOU GOT A GRADIENT SAMPLING SCRIPT, THIS IS THE NEXT BIG VISUALIZATION TOOL
     #params = starting_params
