@@ -222,6 +222,10 @@ def angle_nls(func, args=(), radius=10, resolution = 1000):
 
     print("Pinger Distance = " + str(pingerdistance)  +" meters, Pinger Angle = " + str(pinger) + " degrees, Calculated Angle: " + str(bestPhi * 180/np.pi) + " degrees, Angle Error: " + str(error)+ "%")
     
+
+
+
+
     return params
 
 
