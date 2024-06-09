@@ -99,7 +99,7 @@ if __name__ == "__main__":
     # if experiment is None:
 
     
-    experiment = Experiment_class(radiusPinger=(25), pingerAngle=(np.pi*20/180), radiusGuess=(25))
+    experiment = Experiment_class(pingerRadius=(25), pingerAngle=(np.pi*20/180), radiusGuess=(25))
 
     # Run
     results = experiment.apply()
