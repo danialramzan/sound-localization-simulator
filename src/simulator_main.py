@@ -99,11 +99,11 @@ if __name__ == "__main__":
     # if experiment is None:
 
     
-    experiment = Experiment_class(pingerRadius=(25), pingerAngle=(np.pi*20/180), guessRadius=(25))
+    # experiment = Experiment_class(pingerRadius=(25), pingerAngle=(np.pi*20/180), guessRadius=(25))
 
-    # Run
-    results = experiment.apply()
-    experiment.display_results()
+    # # Run
+    # results = experiment.apply()
+    # experiment.display_results()
 
     # experiment.dump()
 
@@ -137,17 +137,17 @@ if __name__ == "__main__":
     #     print("")
     # print("")
 
-    # for pinger_radius in random.sample(range(1, 80), 8):
-    #     for pinger_angle in random.sample(range(0, 100), 5):
+    for pinger_radius in random.sample(range(1, 80), 8):
+        for pinger_angle in random.sample(range(0, 100), 5):
             
-    #         experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi/100*pinger_angle), guessRadius=(10))
+            experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi/100*pinger_angle), guessRadius=(10))
 
-    #         # Run
-    #         results = experiment.apply()
-    #         experiment.display_results()
+            # Run
+            results = experiment.apply()
+            experiment.display_results()
 
-    #         experiment.dump()
-    #     print("")
-    # print("")
+            experiment.dump()
+        print("")
+    print("")
 
     print("Average Error = " + str(sum(global_vars.error_list)/len(global_vars.error_list)) + "%")
