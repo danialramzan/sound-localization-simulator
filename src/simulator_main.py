@@ -144,7 +144,8 @@ if __name__ == "__main__":
 
             # Run
             results = experiment.apply()
-            experiment.display_results()
+            
+            #experiment.display_results()
 
             experiment.dump()
         print("")
