@@ -50,6 +50,8 @@ if __name__ == "__main__":
     #                     help="Specify the type of input source for the hydrophone data: \nThe Options are:\nglobal_vars.InputSource.simulation\nglobal_vars.InputSource.csv\nglobal_vars.InputSource.shared_memory\nglobal_vars.InputSource.socket")
     parser.add_argument('-csv','--csv_filepath', type=str,
                         help="The file name for csv containing hydrophone data to use")
+    parser.add_argument('-v','--visual', default = True, type=bool,
+                        help="Whether or not to display graphs")
 
     args = parser.parse_args()
     global_vars.num_iterations = args.num_iterations
@@ -144,8 +146,11 @@ if __name__ == "__main__":
 
             # Run
             results = experiment.apply()
-            
-            #experiment.display_results()
+            if(args.visual == True):
+
+                experiment.display_results()
+            else:
+                pass
 
             experiment.dump()
         print("")
