@@ -33,9 +33,9 @@ class DefaultExp(Experiment):
         global_vars.hydrophone_positions = [
             CylindricalPosition(0, 0, 0),
             CylindricalPosition(1.85e-2, 0, 0),
-            CylindricalPosition(1.85e-2, np.pi, 0),
-            CylindricalPosition(1.2e-2, -np.pi/10, 1.2e-2),
-            CylindricalPosition(1.2e-2, -np.pi+np.pi/10, 1.2e-2),
+            #CylindricalPosition(1.85e-2, np.pi, 0),
+            #CylindricalPosition(1.2e-2, -np.pi/10, 1.2e-2),
+           # CylindricalPosition(1.2e-2, -np.pi+np.pi/10, 1.2e-2),
         ]
 
         global_vars.pinger_position = CylindricalPosition(self.pingerRadius, self.pingerAngle, 10)
