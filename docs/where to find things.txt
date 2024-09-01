@@ -1,0 +1,4 @@
+signals are generated or read from a csv in input_generation.py
+
+
+the optimization function and cost function are defined in localization_untils.py
