@@ -59,7 +59,7 @@ class DefaultExp(Experiment):
             self.simulation_chain.add_component(
                 GaussianNoise(mu=0, sigma=self.sigma)
             )
-            global_vars.phase_shift_error = 37
+            global_vars.phase_shift_error = 0
             print("Adding a randomized phase-shift-error to each hydrophone of plus/minus " + str(global_vars.phase_shift_error) + " degrees")
 
         self.simulation_chain.add_component(

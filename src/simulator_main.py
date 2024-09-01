@@ -139,9 +139,13 @@ if __name__ == "__main__":
     #     print("")
     # print("")
 
-    for pinger_radius in random.sample(range(1, 80), 8):
-        for pinger_angle in random.sample(range(0, 100), 5):
-            
+    #for pinger_radius in random.sample(range(1, 80), 8):
+        #for pinger_angle in random.sample(range(0, 100), 5):
+
+    for i in range (20):
+        for j in range(20):
+            pinger_radius = 10
+            pinger_angle =  50
             experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi/100*pinger_angle), guessRadius=(10))
 
             # Run
