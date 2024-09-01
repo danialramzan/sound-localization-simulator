@@ -1,4 +1,6 @@
-signals are generated or read from a csv in input_generation.py
+signals are generated or read from a csv in main, the hydrophone signal list global variable goes to the input_generation.py file and is passed down the processing chain from there
 
 
 the optimization function and cost function are defined in localization_untils.py
+
+phase shift error for profiling sensitivity to phase shifts is added in cross_correlation_stage.py

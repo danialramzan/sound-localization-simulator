@@ -96,8 +96,14 @@ class DefaultExp(Experiment):
 
     def display_results(self):
         if self.results:
-            plt_utils.plot_calculated_positions(self.results, self.initial_guess, self.sigma)
-            show()
+
+            try:
+
+                plt_utils.plot_calculated_positions(self.results, self.initial_guess, self.sigma)
+                show()
+
+            except:
+                print("kek, matplot lib is throwing a fit")
         else:
             self.logger.warn("Run the experiment before displaying results.")
 
