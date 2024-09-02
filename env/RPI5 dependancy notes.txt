@@ -1,3 +1,6 @@
+This was done on the default version of RPI OS that is avaliable on their imager software for RPI5
+
+
 To get this to work on the RPI5 we had to use this requirements file
 
 wheel
