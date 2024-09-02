@@ -1,3 +1,5 @@
+wheel==0.44.0
+virtualenv==20.0.31
 appdirs==1.4.4
 arlpy==1.7.0
 bokeh==3.5.2
@@ -28,7 +30,5 @@ six==1.16.0
 tornado==6.4.1
 tzdata==2024.1
 utm==0.7.0
-virtualenv==20.0.31
-wheel==0.44.0
 xmltodict==0.13.0
 xyzservices==2024.6.0
