@@ -110,8 +110,15 @@ def exe(args=None):
                 line_count += 1
             print(f'Processed {line_count} lines from CSV.')
     # Reading data directly from mic
-    #    elif :
-    #        localize on that thing
+    elif args.microphone_1_data:
+        # right now im leaving it as csv, change if needed!
+        global_vars.input_type = InputType.csv
+        global_vars.hydrophone_signal_list.append(args.microphone_1_data)
+        global_vars.hydrophone_signal_list.append(args.microphone_2_data)
+        global_vars.hydrophone_signal_list.append(args.microphone_3_data)
+        global_vars.hydrophone_signal_list.append(args.microphone_4_data)
+        global_vars.hydrophone_signal_list.append(args.microphone_5_data)
+        print("Microphone data fed!")
 
     # Otherwise, simulate the data
     else:
@@ -162,7 +169,6 @@ def exe(args=None):
             # Run
             results = experiment.apply()
             if (args.visual == True):
-                print("HAWK")
                 experiment.display_results()
             else:
                 pass
