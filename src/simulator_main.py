@@ -1,4 +1,3 @@
-
 '''
 UBC Subbots
 Project Dolphin
@@ -16,12 +15,10 @@ import csv
 import numpy
 import random
 
-#hello from Chloe
-
 
 def extract_experiment_class_name(experiment_name):
     exp_module_name = experiment_name.split(".")[-1]
-    
+
     # split on underscores
     class_name_list = exp_module_name.split("_")
     # capitalize first letter for CamelCase
@@ -36,42 +33,52 @@ def exe(args=None):
     ##################################################
     # Process Command Line Args
     ##################################################
+
+    parser = argparse.ArgumentParser(description='Sound Localization System Simulator')
+    parser.add_argument('-e', '--experiment_name', default='default_exp', type=str,
+                        help='Experiment name to run')
+    parser.add_argument('-n', '--num_iterations', default=1, type=int,
+                        help="The number of iterations that the simulation performs through the component chain")
+    parser.add_argument('-o', '--outfile_name',
+                        default="sim_output_" + datetime.now().strftime("%d-%m-%Y_%H_%M_%S"), type=str,
+                        help="The file name for the simulator output.\n" +
+                             "Output files <OUTFILE_NAME>.p and <OUTFILE_NAME>.xml will be located at <REPO_ROOT>/output/<CONFIG>/")
+    parser.add_argument('-l', '--log_level', default="INFO", type=str,
+                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
+                        help="The level of verbosity with which the simulator will dump logging information")
+    parser.add_argument('-f', '--logfile_name', type=str,
+                        help="The log file name used for the simulation run. If not passed, the experiment name is used")
+    parser.add_argument('-i', '--input_type', default='simulation', type=str,
+                        help="Specify the type of input source for the hydrophone data: \nThe Options are:\nglobal_vars.InputSource.simulation\nglobal_vars.InputSource.csv\nglobal_vars.InputSource.shared_memory\nglobal_vars.InputSource.socket")
+    parser.add_argument('-csv', '--csv_filepath', type=str,
+                        help="The file name for csv containing hydrophone data to use")
+    parser.add_argument('-v', '--visual', default=True, type=bool,
+                        help="Whether or not to display graphs")
+
+    # MODULARIZE DATA
+    parser.add_argument('-m1', '--microphone_1_data', type=str,
+                        help="Data from the first microphone to be used")
+    parser.add_argument('-m2', '--microphone_2_data', type=str,
+                        help="Data from the first microphone to be used")
+    parser.add_argument('-m3', '--microphone_3_data', type=str,
+                        help="Data from the first microphone to be used")
+    parser.add_argument('-m4', '--microphone_4_data', type=str,
+                        help="Data from the first microphone to be used")
+    parser.add_argument('-m5', '--microphone_5_data', type=str,
+                        help="Data from the first microphone to be used")
+
     if args == None:
-        parser = argparse.ArgumentParser(description='Sound Localization System Simulator')
-        parser.add_argument('-e', '--experiment_name', default='default_exp', type=str,
-                            help='Experiment name to run')
-        parser.add_argument('-n', '--num_iterations', default=1, type=int,
-                            help="The number of iterations that the simulation performs through the component chain")
-        parser.add_argument('-o', '--outfile_name',
-                            default="sim_output_" + datetime.now().strftime("%d-%m-%Y_%H_%M_%S"), type=str,
-                            help="The file name for the simulator output.\n" +
-                                "Output files <OUTFILE_NAME>.p and <OUTFILE_NAME>.xml will be located at <REPO_ROOT>/output/<CONFIG>/")
-        parser.add_argument('-l', '--log_level', default="INFO", type=str,
-                            choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
-                            help="The level of verbosity with which the simulator will dump logging information")
-        parser.add_argument('-f', '--logfile_name', type=str,
-                            help="The log file name used for the simulation run. If not passed, the experiment name is used")
-        parser.add_argument('-i', '--input_type', default='simulation', type=str,
-                            help="Specify the type of input source for the hydrophone data: \nThe Options are:\nglobal_vars.InputSource.simulation\nglobal_vars.InputSource.csv\nglobal_vars.InputSource.shared_memory\nglobal_vars.InputSource.socket")
-        parser.add_argument('-csv', '--csv_filepath', type=str,
-                            help="The file name for csv containing hydrophone data to use")
-        parser.add_argument('-v', '--visual', default=True, type=bool,
-                            help="Whether or not to display graphs")
-        
-        parser.add_argument('-m1', '--microphone_1_data', type=str,
-                        help="Data from the first microphone to be used")
-        parser.add_argument('-m2', '--microphone_2_data', type=str,
-                        help="Data from the first microphone to be used")
-        parser.add_argument('-m3', '--microphone_3_data', type=str,
-                        help="Data from the first microphone to be used")
-        parser.add_argument('-m4', '--microphone_4_data', type=np.,
-                        help="Data from the first microphone to be used")
-        parser.add_argument('-m5', '--microphone_5_data', type=str,
-                        help="Data from the first microphone to be used")
-        
         args = parser.parse_args()
     else:
-        args = argparse.Namespace(**args)
+        default_args = vars(parser.parse_args([]))
+
+        # Update defaults with provided arguments, IF NEEDED
+        for key, value in args.items():
+            default_args[key] = value
+        print(default_args)
+
+        # Convert the updated dictionary to argparse.Namespace
+        args = argparse.Namespace(**default_args)
 
     print("ARGS: ", args)
     global_vars.num_iterations = args.num_iterations
@@ -103,8 +110,8 @@ def exe(args=None):
                 line_count += 1
             print(f'Processed {line_count} lines from CSV.')
     # Reading data directly from mic
-#    elif :
-#        localize on that thing
+    #    elif :
+    #        localize on that thing
 
     # Otherwise, simulate the data
     else:
@@ -155,7 +162,7 @@ def exe(args=None):
             # Run
             results = experiment.apply()
             if (args.visual == True):
-
+                print("HAWK")
                 experiment.display_results()
             else:
                 pass
