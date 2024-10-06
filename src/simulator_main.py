@@ -120,9 +120,17 @@ def exe(args=None):
         global_vars.hydrophone_signal_list.append(args.microphone_5_data)
         print("Microphone data fed!")
 
+        # experiment = Experiment_class(pingerRadius=34, pingerAngle=(np.pi / 1 * 900), guessRadius=10)
+        # experiment.apply()
+        # experiment.dump()
+        # return global_vars.pinger_position.phi * 180 / np.pi
+
+
     # Otherwise, simulate the data
     else:
         print("No CSV file provided, simulating data.")
+
+    
     ##################################################
     # main Simulation Tasks
     ##################################################
@@ -161,6 +169,7 @@ def exe(args=None):
     # pinger_radius = 10
     # pinger_angle = 50
     # simulator mode
+
     for pinger_radius in random.sample(range(1, 80), 8):
         for pinger_angle in random.sample(range(0, 100), 5):
             experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi / 100 * pinger_angle),
@@ -177,6 +186,7 @@ def exe(args=None):
         print("")
     print("")
     print("Average Error = " + str(sum(global_vars.error_list) / len(global_vars.error_list)) + "%")
+
 
 
 if __name__ == "__main__":
