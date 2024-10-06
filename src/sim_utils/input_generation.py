@@ -122,11 +122,31 @@ class InputGeneration:
             )
 
             carrier_wave = self._add_leading_zeros(carrier_wave, leading_zeros_t)
+            final_wave = sine_wave * carrier_wave
 
-            return sine_wave * carrier_wave
+
+            # this is bad code
+
+            # # SAVE SIGNAL TO CSV
+            # # Open CSV file to append results
+            # counter = 0  # Simple counter to keep track of iterations
+            # print("currently filling " , counter , "th row")
+            # print(final_wave)
+            #
+            # with open('hydrophone_signals.csv', 'a', newline='') as file:
+            #     np.savetxt(file, final_wave, delimiter=',')
+            #     file.write('\n')
+            
+            # self.save_signal_to_csv(final_wave, 'generated_signals.csv')
+            return final_wave
 
         # If a CSV was specified, use the data from it as the generated input instead
         elif global_vars.input_type == InputType.csv:
             global_vars.nth_hydrophone += 1
 
+            # resets the hydrophone signal list index if it reaches the end, avoiding an index out of bounds error
+            if global_vars.nth_hydrophone == global_vars.hydrophone_signal_list.__len__() - 1:
+                global_vars.nth_hydrophone = 0
+                return global_vars.hydrophone_signal_list[global_vars.hydrophone_signal_list.__len__() - 1]
             return global_vars.hydrophone_signal_list[global_vars.nth_hydrophone]
+            

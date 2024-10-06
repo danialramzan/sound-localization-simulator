@@ -5,6 +5,7 @@ Project Dolphin
 Sound Localization Simulator
 Main Simulation File
 '''
+
 import argparse
 from datetime import datetime
 from importlib import import_module
@@ -17,6 +18,7 @@ import random
 
 #hello from Chloe
 
+
 def extract_experiment_class_name(experiment_name):
     exp_module_name = experiment_name.split(".")[-1]
     
@@ -28,34 +30,51 @@ def extract_experiment_class_name(experiment_name):
     # return CamelCase experiment name
     return "".join(class_name_list)
 
-if __name__ == "__main__":
+
+def exe(args=None):
+    global global_vars
     ##################################################
     # Process Command Line Args
     ##################################################
-    parser = argparse.ArgumentParser(description='Sound Localization System Simulator')
-    parser.add_argument('-e', '--experiment_name', default='default_exp', type=str, 
-                        help='Experiment name to run')
-    parser.add_argument('-n', '--num_iterations', default=1, type=int,
-                        help="The number of iterations that the simulation performs through the component chain")
-    parser.add_argument('-o', '--outfile_name',
-                        default="sim_output_" + datetime.now().strftime("%d-%m-%Y_%H_%M_%S"), type=str,
-                        help="The file name for the simulator output.\n" +
-                            "Output files <OUTFILE_NAME>.p and <OUTFILE_NAME>.xml will be located at <REPO_ROOT>/output/<CONFIG>/")
-    parser.add_argument('-l', '--log_level', default="INFO", type=str,
-                        choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
-                        help="The level of verbosity with which the simulator will dump logging information")
-    parser.add_argument('-f', '--logfile_name', type=str,
-                        help="The log file name used for the simulation run. If not passed, the experiment name is used")
-    # parser.add_argument('-i', '--input_type', default='simulation', type=str,
-    #                     help="Specify the type of input source for the hydrophone data: \nThe Options are:\nglobal_vars.InputSource.simulation\nglobal_vars.InputSource.csv\nglobal_vars.InputSource.shared_memory\nglobal_vars.InputSource.socket")
-    parser.add_argument('-csv','--csv_filepath', type=str,
-                        help="The file name for csv containing hydrophone data to use")
-    parser.add_argument('-v','--visual', default = True, type=bool,
-                        help="Whether or not to display graphs")
+    if args == None:
+        parser = argparse.ArgumentParser(description='Sound Localization System Simulator')
+        parser.add_argument('-e', '--experiment_name', default='default_exp', type=str,
+                            help='Experiment name to run')
+        parser.add_argument('-n', '--num_iterations', default=1, type=int,
+                            help="The number of iterations that the simulation performs through the component chain")
+        parser.add_argument('-o', '--outfile_name',
+                            default="sim_output_" + datetime.now().strftime("%d-%m-%Y_%H_%M_%S"), type=str,
+                            help="The file name for the simulator output.\n" +
+                                "Output files <OUTFILE_NAME>.p and <OUTFILE_NAME>.xml will be located at <REPO_ROOT>/output/<CONFIG>/")
+        parser.add_argument('-l', '--log_level', default="INFO", type=str,
+                            choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"],
+                            help="The level of verbosity with which the simulator will dump logging information")
+        parser.add_argument('-f', '--logfile_name', type=str,
+                            help="The log file name used for the simulation run. If not passed, the experiment name is used")
+        parser.add_argument('-i', '--input_type', default='simulation', type=str,
+                            help="Specify the type of input source for the hydrophone data: \nThe Options are:\nglobal_vars.InputSource.simulation\nglobal_vars.InputSource.csv\nglobal_vars.InputSource.shared_memory\nglobal_vars.InputSource.socket")
+        parser.add_argument('-csv', '--csv_filepath', type=str,
+                            help="The file name for csv containing hydrophone data to use")
+        parser.add_argument('-v', '--visual', default=True, type=bool,
+                            help="Whether or not to display graphs")
+        
+        parser.add_argument('-m1', '--microphone_1_data', type=str,
+                        help="Data from the first microphone to be used")
+        parser.add_argument('-m2', '--microphone_2_data', type=str,
+                        help="Data from the first microphone to be used")
+        parser.add_argument('-m3', '--microphone_3_data', type=str,
+                        help="Data from the first microphone to be used")
+        parser.add_argument('-m4', '--microphone_4_data', type=np.,
+                        help="Data from the first microphone to be used")
+        parser.add_argument('-m5', '--microphone_5_data', type=str,
+                        help="Data from the first microphone to be used")
+        
+        args = parser.parse_args()
+    else:
+        args = argparse.Namespace(**args)
 
-    args = parser.parse_args()
+    print("ARGS: ", args)
     global_vars.num_iterations = args.num_iterations
-
     ##################################################
     # Dynamic Configuration
     ##################################################
@@ -64,19 +83,15 @@ if __name__ == "__main__":
         log_fname = args.logfile_name
     else:
         log_fname = args.experiment_name
-
     # configure logging parameters
     output_utils.configure_logger(args.log_level, log_fname)
-
     # Import the experiment module
     experiment_module = import_module(args.experiment_name)
-
     # Import the experiment class
     class_name = extract_experiment_class_name(args.experiment_name)
     Experiment_class = getattr(experiment_module, class_name)
     # create logger object for this module
     logger = output_utils.initialize_logger(__name__)
-
     # If a CSV file is specified, read all lines into hydrophone signal list
     if args.csv_filepath:
         global_vars.input_type = InputType.csv
@@ -87,70 +102,59 @@ if __name__ == "__main__":
                 global_vars.hydrophone_signal_list.append(numpy.asarray(list(map(float, row))))
                 line_count += 1
             print(f'Processed {line_count} lines from CSV.')
+    # Reading data directly from mic
+#    elif :
+#        localize on that thing
+
     # Otherwise, simulate the data
     else:
         print("No CSV file provided, simulating data.")
-
-
     ##################################################
     # main Simulation Tasks
     ##################################################
-    
     # Instantiate the class. Try loading from a previous run.
     # experiment = Experiment_class.load()  # type: Experiment
     # if experiment is None:
-
-    
     # experiment = Experiment_class(pingerRadius=(25), pingerAngle=(np.pi*20/180), guessRadius=(25))
-
     # # Run
     # results = experiment.apply()
     # experiment.display_results()
-
     # experiment.dump()
-
     # for pinger_radius in [0.11, 0.5, 1, 3]:
     #     for pinger_angle in [np.pi/5, np.pi/3, 3*np.pi/4]:
     #         for guess_radius in [0.1, 0.51, 1.4, 2]:
-            
     #             experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(pinger_angle), guessRadius=(guess_radius))
-
     #             # Run
     #             results = experiment.apply()
     #             #experiment.display_results()
-
     #             experiment.dump()
     #         print("")
     #     print("")
     # print("")
-            
     # for pinger_radius in [60]:
     #     for pinger_angle in [3*np.pi/4]:
     #         for guess_radius in [49,51]:
-            
     #             experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(pinger_angle), guessRadius=(guess_radius))
-
     #             # Run
     #             results = experiment.apply()
     #             #experiment.display_results()
-
     #             experiment.dump()
     #         print("")
     #     print("")
     # print("")
-
-    #for pinger_radius in random.sample(range(1, 80), 8):
-        #for pinger_angle in random.sample(range(0, 100), 5):
-
-    for i in range (20):
-        for j in range(20):
-            pinger_radius = 10
-            pinger_angle =  50
-            experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi/100*pinger_angle), guessRadius=(10))
+    # for i in range(20):
+    #     for j in range(20):
+    # pinger_radius = 10
+    # pinger_angle = 50
+    # simulator mode
+    for pinger_radius in random.sample(range(1, 80), 8):
+        for pinger_angle in random.sample(range(0, 100), 5):
+            experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi / 100 * pinger_angle),
+                                          guessRadius=(10))
 
             # Run
             results = experiment.apply()
-            if(args.visual == True):
+            if (args.visual == True):
 
                 experiment.display_results()
             else:
@@ -159,5 +163,8 @@ if __name__ == "__main__":
             experiment.dump()
         print("")
     print("")
+    print("Average Error = " + str(sum(global_vars.error_list) / len(global_vars.error_list)) + "%")
 
-    print("Average Error = " + str(sum(global_vars.error_list)/len(global_vars.error_list)) + "%")
+
+if __name__ == "__main__":
+    exe()
