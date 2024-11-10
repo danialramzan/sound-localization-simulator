@@ -130,7 +130,6 @@ def exe(args=None):
     else:
         print("No CSV file provided, simulating data.")
 
-    
     ##################################################
     # main Simulation Tasks
     ##################################################
@@ -170,23 +169,30 @@ def exe(args=None):
     # pinger_angle = 50
     # simulator mode
 
-    for pinger_radius in random.sample(range(1, 80), 8):
-        for pinger_angle in random.sample(range(0, 100), 5):
-            experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi / 100 * pinger_angle),
-                                          guessRadius=(10))
+    # for pinger_radius in random.sample(range(1, 80), 8):
+    #     for pinger_angle in random.sample(range(0, 100), 5):
+    #         experiment = Experiment_class(pingerRadius=(pinger_radius), pingerAngle=(np.pi / 100 * pinger_angle),
+    #                                       guessRadius=(10))
+    #
+    #         # Run
+    #         results = experiment.apply()
+    #         if (args.visual == True):
+    #             experiment.display_results()
+    #         else:
+    #             pass
+    #
+    #         experiment.dump()
+    #     print("")
+    # print("")
+    # print("Average Error = " + str(sum(global_vars.error_list) / len(global_vars.error_list)) + "%")
 
-            # Run
-            results = experiment.apply()
-            if (args.visual == True):
-                experiment.display_results()
-            else:
-                pass
+    experiment = Experiment_class(pingerRadius=3, pingerAngle=(np.pi / 4), guessRadius=10)
 
-            experiment.dump()
-        print("")
-    print("")
-    print("Average Error = " + str(sum(global_vars.error_list) / len(global_vars.error_list)) + "%")
-
+    results = experiment.apply()
+    if (args.visual == True):
+        experiment.display_results()
+    else:
+        pass
 
 
 if __name__ == "__main__":
