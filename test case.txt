@@ -1,24 +1,27 @@
-H1        0,0,0
+#CARTESIAN COORDS#
 
-H2    0.0185 , 0 ,0
+Hydrophone 1 pos: 0,0,0
 
-H3    -0.0185, 0, 0
+H2 pos:  0.0185 , 0 ,0
+
+H3 pos:  -0.0185, 0, 0
+
+H4 pos:    0.01141, -0.0037 , 0.012
+
+H5 pos:   -0.01141, -0.0037, 0.012
+
+Pinger pos:   3/sqrt(2), 3/sqrt(2) ,0
 
 
-H4    0.01141, -0.0037 , 0.012
+sound freq: 40KHZ
 
-H5    -0.01141, -0.0037, 0.012
+V=1500m/s
 
-P     3/sqrt(2), 3/sqrt(2) ,0
+V=λ
 
+λ=V/F=0.0375m
 
-50KHZ
-
-V=1500
-
-V=Flambda
-
-lambda=V/F=0.0375m
+// the below distances (~3) are in meters and the numbers (~28800) are phases.
 
 P-H1 = 3 ----> 28800
 
@@ -31,13 +34,15 @@ P-H4 = 2.99459131----> 28748.077
 P-H5 = 3.01071323----> 28902.847
 
 
-d1 h2-h1 -125.307
+dist b/w h2-h1 -125.307
 
-d2 h3-h1 125.854
+dist b/w h3-h1 125.854
 
-d3 h4-h1 -51.923
+dist b/w h4-h1 -51.923
 
-d4 h5-h1 102.847
+dist b/w h5-h1 102.847
+
+final phase shift arr: phases = [0, -125.307, 125.854, -51.923, 102.847]
 
 
 
